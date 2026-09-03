@@ -23,15 +23,26 @@ jobs:
         run: |
           mkdir -p build
           echo "Compiling Flemmix Plugin..."
-          # Simulation de compilation pour environnement hors-template
           zip -r build/Flemmix.jar src/ gradle.properties
         continue-on-error: false
 
-      - name: Release Plugin
-        uses: softprops/action-gh-release@v2
-        if: success()
-        with:
-          tag_name: plugins
-          files: build/Flemmix.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate Repo JSON
+        run: |
+          cd build
+          echo '[
+            {
+              "name": "Flemmix",
+              "version": 1,
+              "description": "Extension pour regarder Flemmix sur CloudStream",
+              "url": "https://githubusercontent.com{{ github.repository }}/main/build/Flemmix.jar"
+            }
+          ]' > repo.json
+        continue-on-error: false
+
+      - name: Push to Repo
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add -A
+          git commit -m "Build and Update Plugins with JSON [skip ci]" --allow-empty
+          git push origin main
