@@ -1,8 +1,8 @@
-[
-  {
-    "name": "Flemmix",
-    "version": 1,
-    "description": "Extension pour regarder Flemmix sur CloudStream",
-    "url": "https://githubusercontent.com{{ github.repository }}/main/build/Flemmix.jar"
-  }
-]
+{
+  "name": "Mon Depot Flemmix",
+  "description": "Dépôt d'extensions CloudStream par mcfflyy",
+  "manifestVersion": 1,
+  "pluginLists": [
+    "https://github.io"
+  ]
+}
