@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -28,7 +30,6 @@ jobs:
 
       - name: Generate Repo JSON
         run: |
-          cd build
           echo '[
             {
               "name": "Flemmix",
@@ -36,13 +37,13 @@ jobs:
               "description": "Extension pour regarder Flemmix sur CloudStream",
               "url": "https://githubusercontent.com{{ github.repository }}/main/build/Flemmix.jar"
             }
-          ]' > repo.json
+          ]' > build/repo.json
         continue-on-error: false
 
-      - name: Push to Repo
+      - name: Save and Commit Files to Main
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add -A
-          git commit -m "Build and Update Plugins with JSON [skip ci]" --allow-empty
+          git add build/Flemmix.jar build/repo.json
+          git commit -m "Publish Flemmix and repo.json [skip ci]" --allow-empty
           git push origin main
