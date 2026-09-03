@@ -1,0 +1,8 @@
+[
+  {
+    "name": "Flemmix",
+    "version": 1,
+    "description": "Extension pour regarder Flemmix sur CloudStream",
+    "url": "https://githubusercontent.com{{ github.repository }}/main/build/Flemmix.jar"
+  }
+]
